@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JSON"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/CSVLib"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="cfg"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
