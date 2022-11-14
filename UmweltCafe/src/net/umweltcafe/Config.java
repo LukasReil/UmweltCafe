@@ -1,7 +1,9 @@
 package net.umweltcafe;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -21,22 +23,15 @@ public class Config {
 	public static HashMap<String, ArrayList<String>> categories;
 
 	
-	/**
-	 * Initializes the Config Class with given parameters
-	 * @param path The path from which the Config is read
-	 */
-	public static void init(String path) {
+	public static void init(InputStream stream) {
+
 		prices = new HashMap<String, Float>();
 		names = new HashMap<String, String>();
 
 		categories = new HashMap<String, ArrayList<String>>();
 
 		String jsonString = "";
-		try {
-			jsonString = readFile(path);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		jsonString = readFile(stream);
 		JSONObject obj = new JSONObject(jsonString);
 
 		JSONArray json_categories = obj.getJSONArray("categories");
@@ -64,6 +59,15 @@ public class Config {
 		System.out.println(prices);
 
 	}
+	
+	/**
+	 * Initializes the Config Class with given parameters
+	 * @param path The path from which the Config is read
+	 * @throws FileNotFoundException 
+	 */	
+	public static void init(String path) throws FileNotFoundException {
+		init(new FileInputStream(new File(path)));
+	}
 
 	public static float price(String identifier) {
 		return prices.get(identifier);
@@ -81,13 +85,17 @@ public class Config {
 		return categories.keySet();
 	}
 	
-	private static String readFile(String path) throws FileNotFoundException {
-		Scanner sc = new Scanner(new File(path));
+	private static String readFile(InputStream stream) {
+		Scanner sc = new Scanner(stream);
 		String s = "";
 		while (sc.hasNext()) {
 			s += sc.next();
 		}
 		sc.close();
 		return s;
+	}
+	
+	private static String readFile(String path) throws FileNotFoundException {
+		return readFile(new FileInputStream(new File(path)));
 	}
 }
