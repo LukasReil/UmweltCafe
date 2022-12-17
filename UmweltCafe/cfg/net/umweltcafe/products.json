@@ -1,0 +1,57 @@
+{
+    "categories": [
+        {
+            "name": "Kaffee",
+            "elements":[
+                {
+                    "name": "Latte_Macchiatto_Doppelt",
+                    "price": 1.50
+                },
+                {
+                    "name": "Latte_Macchiatto_Einfach",
+                    "price": 1.00
+                },
+                {
+                	"name": "Espresso",
+                	"price": 1.00                
+                }
+            ]   
+        },
+        {
+            "name": "Suesses",
+            "elements":[
+                {
+                    "name": "Schoko_Linsen",
+                    "price": 0.90
+                },
+                {
+                    "name": "Schoko_Riegel",
+                    "price": 1.00
+                }
+            ]
+        },
+        {
+            "name": "Haefte",
+            "elements":[
+                {
+                    "name": "Liniertes_Heft",
+                    "price": 1.00
+                },
+                {
+                    "name": "Kariertes_Heft",
+                    "price": 1.00
+                },
+                {
+                    "name": "Musik_Heft",
+                    "price": 1.10
+                },
+                {
+                    "name": "Ruben_Blanko",
+                    "price": 1.10
+                }
+            ]
+        }
+    ],
+    
+    "path": "C:/Users/lukas/Documents/UmweltCafe/"
+}

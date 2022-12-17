@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -18,15 +19,16 @@ public class Config {
 	//Key: Identifier Value: Price
 	public static HashMap<String, Float> prices;
 	//Key: Identifier Value: Name
-	public static HashMap<String, String> names;
+	//public static HashMap<String, String> names;
 	//Key: Identifier Value: All Identifiers contained in category
 	public static HashMap<String, ArrayList<String>> categories;
-
+	//Path to the excel sheet
+	public static String path;
 	
 	public static void init(InputStream stream) {
 
 		prices = new HashMap<String, Float>();
-		names = new HashMap<String, String>();
+		//names = new HashMap<String, String>();
 
 		categories = new HashMap<String, ArrayList<String>>();
 
@@ -43,19 +45,23 @@ public class Config {
 			ArrayList<String> categoryElements = new ArrayList<String>();
 			for (int j = 0; j < elements.length(); j++) {
 				JSONObject element = elements.getJSONObject(j);
-				String elementIdentifier = element.getString("identifier");
+				//String elementIdentifier = element.getString("identifier");
 				String elementName = element.getString("name");
 				elementName = elementName.replaceAll("_", " ");
 				float elementPrice = element.getFloat("price");
-				categoryElements.add(element.getString("identifier"));
-				names.put(elementIdentifier, elementName);
-				prices.put(elementIdentifier, elementPrice);
+				categoryElements.add(elementName);
+				//names.put(elementIdentifier, elementName);
+				prices.put(elementName, elementPrice);
 			}
 			categories.put(categoryName, categoryElements);
 		}
-
+		 
+		LocalDateTime t = LocalDateTime.now();
+		
+		path = obj.getString("path") + t.getYear() + "_" + t.getMonthValue() + ".csv";
+		
 		System.out.println(categories);
-		System.out.println(names);
+//		System.out.println(names);
 		System.out.println(prices);
 
 	}
@@ -73,9 +79,9 @@ public class Config {
 		return prices.get(identifier);
 	}
 
-	public static String name(String identifier) {
-		return names.get(identifier);
-	}
+//	public static String name(String identifier) {
+//		return names.get(identifier);
+//	}
 
 	public static ArrayList<String> category(String categoryName){
 		return categories.get(categoryName);
