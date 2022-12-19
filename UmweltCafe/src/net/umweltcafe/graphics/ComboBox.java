@@ -64,21 +64,21 @@ public class ComboBox {
 		g.fillRect(x, y, width, height);
 		g.setColor(Color.black);
 		int yOff = (height + g.getFontMetrics().getAscent()) / 2;
-		g.drawString(text, x + 20, y + yOff);
+		g.drawString(text, x + Renderer.BOX_HEIGHT, y + yOff);
 
 		g.setColor(triangleColor);
 		if (collapsed) {
 			g.fillPolygon(new int[] {
-					x + 5, x + 5, x + 15
+					x + Renderer.BOX_HEIGHT / 4, x + Renderer.BOX_HEIGHT / 4, x + Renderer.BOX_HEIGHT / 4 * 3
 			}, new int[] {
-					y + 5, y + 15, y + 10
+					y + Renderer.BOX_HEIGHT / 4, y + Renderer.BOX_HEIGHT / 4 * 3, y + Renderer.BOX_HEIGHT / 4 * 2
 			}, 3);
 			return;
 		} else {
 			g.fillPolygon(new int[] {
-					x + 5, x + 10, x + 15
+					x + Renderer.BOX_HEIGHT / 4, x + Renderer.BOX_HEIGHT / 4 * 2, x + Renderer.BOX_HEIGHT / 4 * 3
 			}, new int[] {
-					y + 5, y + 15, y + 5
+					y + Renderer.BOX_HEIGHT / 4, y + Renderer.BOX_HEIGHT / 4 * 3, y + Renderer.BOX_HEIGHT / 4
 			}, 3);
 		}
 

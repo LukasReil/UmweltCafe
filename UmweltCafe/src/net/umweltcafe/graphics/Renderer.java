@@ -1,6 +1,7 @@
 package net.umweltcafe.graphics;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -9,17 +10,15 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
-import javafx.scene.shape.Box;
 import net.umweltcafe.Config;
 import net.umweltcafe.Kasse;
 import net.umweltcafe.graphics.Button.ButtonAction;
-import net.umweltcafe.ordering.Order;
 
 public class Renderer extends JComponent {
 
 	// Rendering Configuration
-	public static final int BOX_WIDTH = 200;
-	public static final int BOX_HEIGHT = 20;
+	public static final int BOX_WIDTH = 300;
+	public static final int BOX_HEIGHT = 40;
 
 	ArrayList<ComboBox> boxes;
 
@@ -30,8 +29,12 @@ public class Renderer extends JComponent {
 	Point mousePos;
 	boolean mouseState;
 
+	Kasse kasse;
+	
 	public Renderer(Kasse kasse) {
 
+		this.kasse = kasse;
+		
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -101,13 +104,14 @@ public class Renderer extends JComponent {
 
 	@Override
 	public void paint(Graphics g) {
+		g.setFont(new Font("Arial", Font.BOLD, Math.round((float) (12f / 20) * BOX_HEIGHT) - 5));
 		for (int i = 0; i < boxes.size(); i++) {
 			int m = boxes.get(i).update(mousePos, mouseState);
 			if (m == 0) {
 				continue;
 			}
 			for (int j = i + 1; j < boxes.size(); j++) {
-				boxes.get(j).y += m;
+				boxes.get(j).y += m;	
 			}
 
 		}
@@ -127,7 +131,10 @@ public class Renderer extends JComponent {
 		}
 
 		finalizer.render(g);
-
+		
+		
+		g.setColor(Color.black);
+		g.drawString(String.format("%.2f", kasse.currentOrder.getPrice()) + "\u20ac", (int) (getWidth() - BOX_WIDTH * 1.3), getHeight() - g.getFontMetrics().getAscent() / 2);;
 		repaint();
 	}
 

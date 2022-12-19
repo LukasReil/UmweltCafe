@@ -14,21 +14,30 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Config {
+	
+	
+	
+	
+	public static final boolean release = false;
+	
+	
+	
+	
+	
 
-	
-	//Key: Identifier Value: Price
+	// Key: Identifier Value: Price
 	public static HashMap<String, Float> prices;
-	//Key: Identifier Value: Name
-	//public static HashMap<String, String> names;
-	//Key: Identifier Value: All Identifiers contained in category
+	// Key: Identifier Value: Name
+	// public static HashMap<String, String> names;
+	// Key: Identifier Value: All Identifiers contained in category
 	public static HashMap<String, ArrayList<String>> categories;
-	//Path to the excel sheet
+	// Path to the excel sheet
 	public static String path;
-	
+
 	public static void init(InputStream stream) {
 
 		prices = new HashMap<String, Float>();
-		//names = new HashMap<String, String>();
+		// names = new HashMap<String, String>();
 
 		categories = new HashMap<String, ArrayList<String>>();
 
@@ -45,32 +54,33 @@ public class Config {
 			ArrayList<String> categoryElements = new ArrayList<String>();
 			for (int j = 0; j < elements.length(); j++) {
 				JSONObject element = elements.getJSONObject(j);
-				//String elementIdentifier = element.getString("identifier");
+				// String elementIdentifier = element.getString("identifier");
 				String elementName = element.getString("name");
 				elementName = elementName.replaceAll("_", " ");
 				float elementPrice = element.getFloat("price");
 				categoryElements.add(elementName);
-				//names.put(elementIdentifier, elementName);
+				// names.put(elementIdentifier, elementName);
 				prices.put(elementName, elementPrice);
 			}
 			categories.put(categoryName, categoryElements);
 		}
-		 
+
 		LocalDateTime t = LocalDateTime.now();
-		
+
 		path = obj.getString("path") + t.getYear() + "_" + t.getMonthValue() + ".csv";
-		
+
 		System.out.println(categories);
 //		System.out.println(names);
 		System.out.println(prices);
 
 	}
-	
+
 	/**
 	 * Initializes the Config Class with given parameters
+	 * 
 	 * @param path The path from which the Config is read
-	 * @throws FileNotFoundException 
-	 */	
+	 * @throws FileNotFoundException
+	 */
 	public static void init(String path) throws FileNotFoundException {
 		init(new FileInputStream(new File(path)));
 	}
@@ -83,14 +93,14 @@ public class Config {
 //		return names.get(identifier);
 //	}
 
-	public static ArrayList<String> category(String categoryName){
+	public static ArrayList<String> category(String categoryName) {
 		return categories.get(categoryName);
 	}
-	
-	public static Set<String> categoryNames(){
+
+	public static Set<String> categoryNames() {
 		return categories.keySet();
 	}
-	
+
 	private static String readFile(InputStream stream) {
 		Scanner sc = new Scanner(stream);
 		String s = "";
@@ -100,7 +110,8 @@ public class Config {
 		sc.close();
 		return s;
 	}
-	
+
+	@SuppressWarnings("unused")
 	private static String readFile(String path) throws FileNotFoundException {
 		return readFile(new FileInputStream(new File(path)));
 	}

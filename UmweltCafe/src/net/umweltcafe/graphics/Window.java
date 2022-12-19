@@ -15,7 +15,7 @@ public class Window {
 		renderer = new Renderer(kasse);
 		window = new JFrame("Umwelt Café");
 		window.add(renderer);
-		window.setSize(600, 600);
+		window.setSize(200, 200);
 		window.setLocationRelativeTo(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setVisible(true);

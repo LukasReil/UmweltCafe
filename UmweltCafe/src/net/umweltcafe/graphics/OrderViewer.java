@@ -16,8 +16,8 @@ public class OrderViewer {
 
 	int x, y;
 
-	public static final int width = (int) (200 * 1.5);
-	public static final int height = 20;
+	public static final int width = (int) (Renderer.BOX_WIDTH * 1.5);
+	public static final int height = Renderer.BOX_HEIGHT;
 
 	public static final int counterCenter = (int) (width / 1.5 + (width - width / 1.5) / 2);
 	public static final int increaseCenter = (int) (counterCenter + (width - width / 1.5) / 4);
@@ -61,10 +61,6 @@ public class OrderViewer {
 					@Override
 					public void perform() {
 						currentOrder.order.put(key, currentOrder.order.get(key) - 1);
-						if (currentOrder.order.get(key) == 0) {
-							icbs.remove(key);
-							dcbs.remove(key);
-						}
 					}
 				}));
 
@@ -79,7 +75,7 @@ public class OrderViewer {
 		HashMap<String, Integer> order = currentOrder.order;
 
 		int h = 0;
-		
+
 		ArrayList<String> toRemove = new ArrayList<String>();
 
 		for (Entry<String, Integer> o : order.entrySet()) {
@@ -88,12 +84,7 @@ public class OrderViewer {
 
 			icbs.get(key).update(mousePos, buttonState, x + increaseCenter - height / 2, y + h * height);
 			dcbs.get(key).update(mousePos, buttonState, x + decreaseCenter - height / 2, y + h * height);
-			
-			if(!icbs.containsKey(key)) {
-				toRemove.add(key);
-				continue;
-			}
-			
+
 			g.setColor(Color.gray);
 			g.drawRect(x, y + h * height, (int) (width / 1.5f), height);
 			g.setColor(Color.black);
@@ -104,10 +95,16 @@ public class OrderViewer {
 			dcbs.get(key).render(g, x + decreaseCenter - height / 2, y + h * height);
 
 			h++;
+
+			if (currentOrder.order.get(key) == 0) {
+				toRemove.add(key);
+			}
 		}
-		
-		for(String key : toRemove) {
+
+		for (String key : toRemove) {
 			currentOrder.order.remove(key);
+			icbs.remove(key);
+			dcbs.remove(key);
 		}
 	}
 
