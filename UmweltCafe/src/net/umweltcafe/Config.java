@@ -18,7 +18,7 @@ public class Config {
 	
 	
 	
-	public static final boolean release = false;
+	public static final boolean release = true;
 	
 	
 	
@@ -35,6 +35,7 @@ public class Config {
 	public static String path;
 
 	public static void init(InputStream stream) {
+		
 
 		prices = new HashMap<String, Float>();
 		// names = new HashMap<String, String>();
@@ -50,6 +51,7 @@ public class Config {
 		for (int i = 0; i < json_categories.length(); i++) {
 			JSONObject category = json_categories.getJSONObject(i);
 			String categoryName = category.getString("name");
+			categoryName = categoryName.replaceAll("_", " ");
 			JSONArray elements = category.getJSONArray("elements");
 			ArrayList<String> categoryElements = new ArrayList<String>();
 			for (int j = 0; j < elements.length(); j++) {
@@ -82,7 +84,9 @@ public class Config {
 	 * @throws FileNotFoundException
 	 */
 	public static void init(String path) throws FileNotFoundException {
+		System.out.println(new File(path).getAbsolutePath());
 		init(new FileInputStream(new File(path)));
+		
 	}
 
 	public static float price(String identifier) {
